@@ -33,31 +33,36 @@ public class BootstrapData implements CommandLineRunner {
         Author a1 = new Author();
         a1.setFirstName("Mohil");
         a1.setLastName("Mokaria");
-        
-        //Created Author2
-        Author a2 = new Author();
-        a2.setFirstName("Alex");
-        a2.setLastName("Monalisa");
 
         //Created Book1
         Book b1 = new Book();
         b1.setTitle("Book 1");
         b1.setIsbn("123");
-        
+
+        Author a1Saved = authorRepository.save(a1);
+        Book b1Saved = bookRepository.save(b1);
+
+        //Adding saved book1 to Author1 BOOKS set
+        a1Saved.getBooks().add(b1Saved);
+        b1Saved.getAuthors().add(a1Saved);
+
+        //Created Author2
+        Author a2 = new Author();
+        a2.setFirstName("Alex");
+        a2.setLastName("Monalisa");
+
         //Created Book2
         Book b2 = new Book();
         b2.setTitle("Book 2");
         b2.setIsbn("456");
 
         //saving Authors & Books to DB
-        Author a1Saved = authorRepository.save(a1);
         Author a2Saved = authorRepository.save(a2);
-        Book b1Saved = bookRepository.save(b1);
         Book b2Saved = bookRepository.save(b2);
 
-        //Adding saved books to Author's BOOKS set
-        a1Saved.getBooks().add(b1Saved);
+        //Adding saved book2 to Author2 BOOKS set
         a2Saved.getBooks().add(b2Saved);
+        b2Saved.getAuthors().add(a2Saved);
 
         //Created a Publisher
         Publisher royal = new Publisher();
@@ -84,10 +89,10 @@ public class BootstrapData implements CommandLineRunner {
         System.out.println("Author Count = " + authorRepository.count());
         System.out.println("Book Count = " + bookRepository.count());
         System.out.println("Publisher Count = " + publisherRepository.count());
-        System.out.println(a1Saved.toString());
-        System.out.println(a2Saved.toString());
-        System.out.println(b1Saved.toString());
-        System.out.println(b2Saved.toString());
-        System.out.println(royalSaved.toString());
+//        System.out.println(a1Saved.toString());
+//        System.out.println(a2Saved.toString());
+//        System.out.println(b1Saved.toString());
+//        System.out.println(b2Saved.toString());
+//        System.out.println(royalSaved.toString());
     }
 }
